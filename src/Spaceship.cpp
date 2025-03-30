@@ -66,8 +66,8 @@ void Spaceship::TakeDamage(){
     lastDamagedTime = GetTime();
 }
 
-Rectangle Spaceship::GetRect(){
-    return {position.x,position.y,float(image.width),float(image.height)};
+Rectangle Spaceship::GetRect() const {
+    return {position.x,position.y,static_cast<float>(image.width),static_cast<float>(image.height)};
 }
 
 void Spaceship::Reset(){

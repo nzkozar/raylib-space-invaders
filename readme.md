@@ -2,6 +2,8 @@
 
 Followed a YouTube tutorial: https://www.youtube.com/watch?v=TGo3Oxdpr5o
 
+![](screenshot.png)
+
 ## TODO
 - Level complete UI & sound
 - Spaceship life lost animation & sound
