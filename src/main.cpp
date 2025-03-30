@@ -11,6 +11,10 @@ int main() {
     InitWindow(screenWidth + UI_OFFSET_PX, screenHeight + 2*UI_OFFSET_PX, "C++ Space Invaders");
     InitAudioDevice();
 
+    // Check if gamepad is available
+    if (IsGamepadAvailable(0)) {
+        TraceLog(LOG_INFO, "Gamepad 0 detected: %s", GetGamepadName(0));
+    }
 
     SetTargetFPS(60);
     

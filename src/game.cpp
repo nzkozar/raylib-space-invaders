@@ -3,9 +3,11 @@
 #include <string>
 #include <fstream>
 
+#include "GLFW/glfw3.h"
+
 
 std::string FormatWithLeadingZeroes(int number, int width){
-    std::string numberText = std::to_string(number);
+    const std::string numberText = std::to_string(number);
     int leadingZeroes = width - numberText.length();
     return std::string(leadingZeroes,'0') + numberText;
 }
@@ -52,7 +54,7 @@ void Game::Draw(){
     mysteryShip.Draw();
 }
 
-void Game::DrawUI(){
+void Game::DrawUI() const {
     DrawRectangleRoundedLinesEx({10,10,780,780},0.18f,20,3,UI_COLOR);
     DrawLineEx({25,730},{775,730},3,UI_COLOR);
 
@@ -70,12 +72,12 @@ void Game::DrawUI(){
 
     //Score text
     DrawTextEx(font, "SCORE", {50,15}, 34, 2, UI_COLOR);
-    std::string scoreText = FormatWithLeadingZeroes(score,5);
+    const std::string scoreText = FormatWithLeadingZeroes(score,5);
     DrawTextEx(font, scoreText.c_str(), {50,45}, 34, 2, UI_COLOR);
 
     //Highscore text
     DrawTextEx(font, "HIGHSCORE", {570,15}, 34, 2, UI_COLOR);
-    std::string highscoreText = FormatWithLeadingZeroes(highscore,5);
+    const std::string highscoreText = FormatWithLeadingZeroes(highscore,5);
     DrawTextEx(font, highscoreText.c_str(), {643,45}, 34, 2, UI_COLOR);
 }
 
@@ -97,14 +99,14 @@ void Game::Update(){
         if(GetTime() - mysteryShipLastSpawnTime > mysteryShipSpawnInterval){
             mysteryShip.Spawn();
             mysteryShipLastSpawnTime = GetTime();
-            mysteryShipSpawnInterval = GetRandomValue(10,20);
+            mysteryShipSpawnInterval = static_cast<float>(GetRandomValue(10, 20));
         }
     
         mysteryShip.Update();
     
         CheckForCollisions();
     }else{
-        if(IsKeyDown(KEY_ENTER)){
+        if(IsKeyDown(KEY_ENTER) || IsGamepadButtonDown(0,GAMEPAD_BUTTON_RIGHT_FACE_DOWN)){
             Reset();
             InitGame();
         }
@@ -113,13 +115,17 @@ void Game::Update(){
 
 void Game::HandleInput(){
     if(run){
-        if(IsKeyDown(KEY_LEFT)){
+        float gamepadMoveValueDeadZone = 0.3;
+        float gamepadLeftStick = GetGamepadAxisMovement(0,GAMEPAD_AXIS_LEFT_X);
+
+        if(IsKeyDown(KEY_LEFT) || gamepadLeftStick < -gamepadMoveValueDeadZone){
             spaceship.MoveLeft();
-        }else if(IsKeyDown(KEY_RIGHT)){
+        }else if(IsKeyDown(KEY_RIGHT) || gamepadLeftStick > gamepadMoveValueDeadZone){
             spaceship.MoveRight();
         }
-        
-        if(IsKeyDown(KEY_SPACE)){
+
+        float rightTrigger = GetGamepadAxisMovement(0,GAMEPAD_AXIS_RIGHT_TRIGGER);
+        if(IsKeyDown(KEY_SPACE) || rightTrigger > gamepadMoveValueDeadZone){
             spaceship.FireLaser();
         }
     }

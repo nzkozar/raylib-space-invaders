@@ -10,13 +10,13 @@ class Game{
         Game(); //Constructor
         ~Game(); //Destructor
         void Draw();
-        void DrawUI();
+        void DrawUI() const;
         void Update();
         void HandleInput();
-        bool run;
-        int score;
-        int highscore;
-        Music music;
+        bool run = true;
+        int score = 0;
+        int highscore = 0;
+        Music music{};
     private:
         void DeleteInactiveLasers();
         void CreateObstacles();
@@ -37,14 +37,14 @@ class Game{
         std::vector<Obstacle> obstacles;
         std::vector<Alien> aliens;
         std::vector<Laser> alienLasers;
-        int aliensDirection;
+        int aliensDirection{};
         constexpr static float alienLaserShootInterval = 0.45;
-        float lastAlienLaserFiredTime;
+        float lastAlienLaserFiredTime{};
         MysteryShip mysteryShip;
-        float mysteryShipSpawnInterval;
-        float mysteryShipLastSpawnTime;
-        int lives;
-        Font font;
-        Texture2D spaceshipImage;
-        Sound explosionSound;
+        float mysteryShipSpawnInterval{};
+        float mysteryShipLastSpawnTime{};
+        int lives{};
+        Font font{};
+        Texture2D spaceshipImage{};
+        Sound explosionSound{};
 };
