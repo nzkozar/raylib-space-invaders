@@ -1,3 +1,4 @@
+#include <iostream>
 #include <raylib.h>
 #include "game.hpp"
 #include "colors.h"
@@ -8,13 +9,8 @@ int main() {
     constexpr int screenWidth = 750;
     constexpr int screenHeight = 700;
     
-    InitWindow(screenWidth + UI_OFFSET_PX, screenHeight + 2*UI_OFFSET_PX, "C++ Space Invaders");
+    InitWindow(screenWidth + UI_OFFSET_PX, screenHeight + 2*UI_OFFSET_PX, "Space Invaders");
     InitAudioDevice();
-
-    // Check if gamepad is available
-    if (IsGamepadAvailable(0)) {
-        TraceLog(LOG_INFO, "Gamepad 0 detected: %s", GetGamepadName(0));
-    }
 
     SetTargetFPS(60);
     

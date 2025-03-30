@@ -115,7 +115,7 @@ void Game::Update(){
 
 void Game::HandleInput(){
     if(run){
-        float gamepadMoveValueDeadZone = 0.3;
+        constexpr float gamepadMoveValueDeadZone = 0.3;
         float gamepadLeftStick = GetGamepadAxisMovement(0,GAMEPAD_AXIS_LEFT_X);
 
         if(IsKeyDown(KEY_LEFT) || gamepadLeftStick < -gamepadMoveValueDeadZone){
@@ -150,8 +150,8 @@ void Game::DeleteInactiveLasers(){
 }
 
 void Game::CreateObstacles(){
-    unsigned int obstacleWidth = Obstacle::grid[0].size() * Block::SIDE_LENGTH;
-    float gapWidth = int(GetScreenWidth() - (4 * obstacleWidth))/5;
+    const unsigned int obstacleWidth = Obstacle::grid[0].size() * Block::SIDE_LENGTH;
+    const float gapWidth = static_cast<int>(GetScreenWidth() - (4 * obstacleWidth))/5;
 
     for(int i=0;i<4;++i){
         const float offsetX = (i + 1) * gapWidth + i * obstacleWidth;
