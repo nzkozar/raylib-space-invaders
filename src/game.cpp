@@ -154,10 +154,10 @@ void Game::CreateObstacles(){
     float gapWidth = int(GetScreenWidth() - (4 * obstacleWidth))/5;
 
     for(int i=0;i<4;++i){
-        float offsetX = (i + 1) * gapWidth + i * obstacleWidth;
-        Obstacle obstacle = Obstacle({
+        const float offsetX = (i + 1) * gapWidth + i * obstacleWidth;
+        auto obstacle = Obstacle({
                 offsetX, 
-                float(GetScreenHeight()-200)
+                static_cast<float>(GetScreenHeight() - 200)
             });
         obstacles.push_back(obstacle);
     }
@@ -173,8 +173,8 @@ void Game::CreateAliens(){
                 alienType = 2;
             }
 
-            float x = col * 55 + 75;
-            float y = row * 55 + 110;
+            const float x = col * 55 + 75;
+            const float y = row * 55 + 110;
             aliens.push_back(Alien(alienType,{x,y}));
         }
     }
